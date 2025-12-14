@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Doorbell</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        h1 { color: #333; }
+        h2 {
+            color: #0078ff;
+            margin-top: 15px;
+        }
+        .unknown {
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+        .refresh {
+            background: #00060d;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .refresh:hover {
+            background: #0e0e0e;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🏡 Smart Doorbell</h1>
+
+        {% if image_path %}
+            <img src="{{ url_for('static', filename='latest.jpg') }}?t={{ timestamp }}" alt="Visitor Photo">
+
+            {% if name == "Unknown" %}
+                <h2 class="unknown">🚫 Unknown Visitor</h2>
+            {% else %}
+                <h2>{{ name }}</h2>
+                <p>Confidence: {{ "%.2f"|format(score) }}</p>
+            {% endif %}
+        {% else %}
+            <p>No visitor yet!</p>
+        {% endif %}
+
+        <button class="refresh" onclick="location.reload()">🔄 Refresh</button>
+    </div>
+</body>
+</html>
